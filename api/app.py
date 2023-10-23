@@ -22,6 +22,8 @@ def process_query():
         return "Dinosaurs ruled the Earth 200 million years ago"
     if query_string == "asteroids":
         return "Unknown"
+    else:
+        return "Query not recognised"
 
 
 if __name__ == "__main__":
