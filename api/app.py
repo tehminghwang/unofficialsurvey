@@ -16,10 +16,10 @@ def submit():
 
 
 @app.route("/query", methods=["GET"])
-def process_query(item):
-    if item == "dinosaurs":
+def process_query(q):
+    if q == "dinosaurs":
         my_string = "Dinosaurs ruled the Earth 200 million years ago"
         return my_string
-    if item == "asteroids":
+    if q == "asteroids":
         my_string = "Unknown"
         return my_string
