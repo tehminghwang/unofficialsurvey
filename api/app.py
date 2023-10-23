@@ -23,9 +23,9 @@ def process_query(q):
         my_string = "Unknown"
         return my_string
 
+
 @app.route("/query", methods=["GET"])
 def query_endpoint():
-    query = request.args.get('q')
+    query = request.args.get("q")
     result = process_query(query)
     return result
-
