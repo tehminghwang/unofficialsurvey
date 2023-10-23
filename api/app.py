@@ -29,7 +29,3 @@ def prog_query():
     query_value = request.args.get("q")
     result = process_query(query_value)
     return result
-
-
-# if __name__ == "__main__":
-#   app.run(debug=True)
