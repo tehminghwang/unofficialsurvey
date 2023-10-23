@@ -15,7 +15,6 @@ def submit():
     return render_template("confirm.html", pet=input_pet, age=input_age)
 
 
-@app.route("/query", methods=["GET"])
 def process_query(q):
     if q == "dinosaurs":
         my_string = "Dinosaurs ruled the Earth 200 million years ago"
@@ -23,3 +22,10 @@ def process_query(q):
     if q == "asteroids":
         my_string = "Unknown"
         return my_string
+
+@app.route("/query", methods=["GET"])
+def query_endpoint():
+    query = request.args.get('q')
+    result = process_query(query)
+    return result
+
