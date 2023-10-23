@@ -15,17 +15,20 @@ def submit():
     return render_template("confirm.html", pet=input_pet, age=input_age)
 
 
-def assess_query(q):
+def process_query(q):
     if q == "dinosaurs":
         my_string = "Dinosaurs ruled the Earth 200 million years ago"
-        return my_string
     if q == "asteroids":
         my_string = "Unknown"
-        return my_string
+    return my_string
 
 
-@app.route("/query")
-def process_query():
+@app.route("/query", methods=["GET"])
+def query_endpoint():
     query = request.args.get("q")
-    result = assess_query(query)
+    result = process_query(query)
     return result
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
