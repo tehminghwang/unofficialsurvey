@@ -7,8 +7,7 @@ app = Flask(__name__)
 def hello_world():
     return render_template("index.html")
 
-
-@app.route("/submit", methods=["POST"])
+@app.route("/submit",       methods=["POST"])
 def submit():
     input_pet = request.form.get("pet")
     input_age = request.form.get("age")
