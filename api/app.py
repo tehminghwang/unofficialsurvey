@@ -24,7 +24,7 @@ def assess_query(q):
         return my_string
 
 
-@app.route("/query", methods=["GET"])
+@app.route("/query")
 def process_query():
     query = request.args.get("q")
     result = assess_query(query)
