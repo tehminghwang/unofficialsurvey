@@ -14,7 +14,8 @@ jobs:
         run: pip install black
       - name: Run black
         run: black api/app_test.py
-  python-formatting:
+  python-formatting-check:
+    needs: auto-formatting
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -28,7 +29,7 @@ jobs:
     - name: Run flake8
       run: flake8 api/
   build-step:
-    needs: python-formatting
+    needs: python-formatting-check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
