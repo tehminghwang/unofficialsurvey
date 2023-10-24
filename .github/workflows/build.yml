@@ -30,6 +30,7 @@ jobs:
         run: pip install pytest
       - name: Run unit tests
         run: pytest api/*.py
+
   deploy-to-vercel:
     needs: build-step
     runs-on: ubuntu-latest
