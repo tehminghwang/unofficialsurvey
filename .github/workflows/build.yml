@@ -13,7 +13,7 @@ jobs:
       - name: Install black
         run: pip install black
       - name: Run black
-        run: black api/app_test.py
+        run: black api/*.py
   python-formatting-check:
     needs: auto-formatting
     runs-on: ubuntu-latest
@@ -61,7 +61,7 @@ jobs:
       - name: Install pytest
         run: pip install pytest
       - name: Run browser tests
-        run: pytest api/browser_test.py
+        run: pytest browser_test.py
   security-tests:
     needs: browser-test
     runs-on: ubuntu-latest
