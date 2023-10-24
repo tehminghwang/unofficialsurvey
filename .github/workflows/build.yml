@@ -56,12 +56,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      - name: Install selenium
-        run: pip install -U selenium
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install bs4
+        run: pip install bs4
+      - name: Install requests
+        run: pip install requests
       - name: Run browser tests
-        run: pytest browser_test.py
+        run: pytest api/browser_test.py
   security-tests:
     needs: browser-test
     runs-on: ubuntu-latest
