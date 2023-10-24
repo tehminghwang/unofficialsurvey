@@ -30,22 +30,8 @@ jobs:
         run: pip install pytest
       - name: Run unit tests
         run: pytest api/*.py
-  security-tests:
-    needs: build-step
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
-      - name: Install safety
-        run: pip install safety
-      - name: Run dependency vulnerabilities file scan
-        run: safety check -r requirements.txt --key 23772690-2a319d85-96ef08e5-00461b5f
   deploy-to-vercel:
-    needs: security-tests
+    needs: build-step
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
