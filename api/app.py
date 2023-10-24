@@ -15,7 +15,6 @@ def submit():
     return render_template("confirm.html", pet=input_pet, age=input_age)
 
 
-
 def process_query(query_string):
     if query_string == "dinosaurs":
         return "Dinosaurs ruled the Earth 200 million years ago"
