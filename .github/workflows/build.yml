@@ -44,8 +44,24 @@ jobs:
         run: pip install pytest
       - name: Run unit tests
         run: pytest api/*.py
-  security-tests:
+  browser-test:
     needs: build-step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install selenium
+        run: pip install -U selenium
+      - name: Install pytest
+        run: pip install pytest
+      - name: Run browser tests
+        run: pytest api/browser_test.py
+  security-tests:
+    needs: browser-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
