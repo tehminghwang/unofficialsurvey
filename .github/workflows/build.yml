@@ -48,7 +48,7 @@ jobs:
         run: pip install requests
       - name: Run unit tests
         run: pytest api/*.py
-  browser-test:
+  browser-tests:
     needs: build-step
     runs-on: ubuntu-latest
     steps:
@@ -67,7 +67,7 @@ jobs:
       - name: Run browser tests
         run: pytest api/browser_test.py
   security-tests:
-    needs: browser-test
+    needs: browser-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
