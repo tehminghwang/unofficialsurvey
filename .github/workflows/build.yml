@@ -45,7 +45,7 @@ jobs:
       - name: Run dependency vulnerabilities file scan
         run: safety check -r requirements.txt --key 23772690-2a319d85-96ef08e5-00461b5f
   deploy-to-vercel:
-    needs: build-step
+    needs: security-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
