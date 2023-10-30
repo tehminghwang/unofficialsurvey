@@ -38,11 +38,18 @@ def process_query(query_string):
         for i in numlist:
             x = is_prime(int(i))
             if x == 1:
-                prime_list.append(i)
+                prime_list.append(int(i))
         return str(prime_list)
     elif "minus" in query_string:
         numlist = re.findall(r'\d+', query_string)
         return str(is_minus(list(map(int, numlist))))
+    elif "cube" in query_string:
+        cube_list = []
+        numlist = re.findall(r'\d+', query_string)
+        for i in numlist:
+            if (is_cube(int(i)) & is_square(int(i))):
+                cube_list.append(int(i))
+        return str(cube_list)
     else:
         return "Query not recognised"
 
@@ -72,3 +79,11 @@ def is_prime(num):
 
 def is_minus(my_list):
     return (my_list[0]-my_list[1])
+
+
+def is_cube(num) -> bool:
+    return round(num ** (1 / 3)) ** 3 == num
+
+
+def is_square(num) -> bool:
+    return round(num ** (1 / 2)) ** 2 == num

@@ -29,8 +29,12 @@ def test_does_not_know_multiply():
 
 
 def test_does_not_know_prime():
-    assert process_query("primes: 30, 55, 70, 92, 7?") == "['7']"
+    assert process_query("primes: 30, 55, 70, 92, 7?") == "[7]"
 
 
 def test_does_not_know_minus():
     assert process_query("What is 10 minus 19?") == "-9"
+
+
+def test_does_not_know_cube():
+    assert process_query("cube: 1, 20, 64, 729, 900?") == "[1, 64, 729]"
