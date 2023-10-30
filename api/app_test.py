@@ -14,3 +14,8 @@ def test_does_not_know_about_asteroids():
 
 def test_does_not_know_about_name():
     assert process_query("name") == "teamimperial"
+
+
+def test_does_not_know_greatest_number():
+    assert process_query("Which of the following numbers is the largest: 45, 20, 73?") == "73"
+
