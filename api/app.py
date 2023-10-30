@@ -22,7 +22,7 @@ def process_query(query_string):
     if query_string == "asteroids":
         return "Unknown"
     elif "name" in query_string:
-        return "teamimperial"
+        return "teamDOCSSE"
     elif "largest" in query_string:
         numlist = re.findall(r'\d+', query_string)
         return int(max(list(map(int, numlist))))
