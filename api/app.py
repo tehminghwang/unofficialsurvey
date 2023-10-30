@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import re
 
 app = Flask(__name__)
 
@@ -23,13 +24,8 @@ def process_query(query_string):
     elif "name" in query_string:
         return "teamimperial"
     elif "largest" in query_string:
-        listNum = []
-        for i in query_string.split():
-            if i.isdigit():
-                listNum.append(int(i))
-                print(listNum)
-                temp = ''
-        return str(max(listNum))
+        numlist = re.findall('\d+', query_string)
+        return str(list(map(int, numlist)))
     else:
         return "Query not recognised"
 
