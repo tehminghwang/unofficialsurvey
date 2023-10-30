@@ -26,7 +26,7 @@ def process_query(query_string):
         listNum = []
         for i in query_string.split():
             if i.isdigit():
-                listNum.append(i)
+                listNum.append(int(i))
         return str(max(listNum))
     else:
         return "Query not recognised"
