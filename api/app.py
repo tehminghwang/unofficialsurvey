@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 import re
+import numpy
 
 app = Flask(__name__)
 
@@ -29,6 +30,9 @@ def process_query(query_string):
     elif "plus" in query_string:
         numlist = re.findall(r'\d+', query_string)
         return str(sum(list(map(int, numlist))))
+    elif "multiplied" in query_string:
+        numlist = re.findall(r'\d+', query_string)
+        return str(numpy.prod(list(map(int, numlist))))
     else:
         return "Query not recognised"
 

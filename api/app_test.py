@@ -22,3 +22,8 @@ def test_does_not_know_greatest_number():
 
 def test_does_not_know_sum():
     assert process_query("What is 86 plus 39?") == "125"
+
+
+def test_does_not_know_multiply():
+    assert process_query("What is 34 multiplied by 14?") == "476"
+
