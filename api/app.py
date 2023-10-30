@@ -26,13 +26,13 @@ def process_query(query_string):
         return "teamimperial"
     elif "largest" in query_string:
         numlist = re.findall(r'\d+', query_string)
-        return str(max(list(map(int, numlist))))
+        return int(max(list(map(int, numlist))))
     elif "plus" in query_string:
         numlist = re.findall(r'\d+', query_string)
-        return str(sum(list(map(int, numlist))))
+        return int(sum(list(map(int, numlist))))
     elif "multiplied" in query_string:
         numlist = re.findall(r'\d+', query_string)
-        return str(numpy.prod(list(map(int, numlist))))
+        return int(numpy.prod(list(map(int, numlist))))
     else:
         return "Query not recognised"
 
