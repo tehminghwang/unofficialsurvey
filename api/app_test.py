@@ -17,5 +17,4 @@ def test_does_not_know_about_name():
 
 
 def test_does_not_know_greatest_number():
-    assert process_query("Which of the following numbers is the largest: 45, 20, 73?") == "73"
-
+    assert process_query("largest: 45, 20, 73?") == "73"

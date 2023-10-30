@@ -24,8 +24,8 @@ def process_query(query_string):
     elif "name" in query_string:
         return "teamimperial"
     elif "largest" in query_string:
-        listNum = list(map(int,re.findall('\d+',query_string)))
-        return max(listNum)
+        listNum = list(map(int, re.findall('\d+', query_string)))
+        return str(max(listNum))
     else:
         return "Query not recognised"
 
