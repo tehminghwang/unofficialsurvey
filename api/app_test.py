@@ -18,3 +18,7 @@ def test_does_not_know_about_name():
 
 def test_does_not_know_greatest_number():
     assert process_query("largest: 45, 20, 73?") == "73"
+
+
+def test_does_not_know_sum():
+    assert process_query("What is 86 plus 39?") == "125"
