@@ -29,7 +29,7 @@ def test_does_not_know_multiply():
 
 
 def test_does_not_know_prime():
-    assert process_query("primes: 30, 55, 70, 92, 7?") == "[7]"
+    assert process_query("primes: 30, 55, 70, 92, 7?") == "7"
 
 
 def test_does_not_know_minus():

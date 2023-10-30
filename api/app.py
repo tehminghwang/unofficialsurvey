@@ -39,7 +39,10 @@ def process_query(query_string):
             x = is_prime(int(i))
             if x == 1:
                 prime_list.append(int(i))
-        return str(prime_list)
+        if len(prime_list) == 1:
+            return str(prime_list[0])
+        else:
+            return str(prime_list)
     elif "minus" in query_string:
         numlist = re.findall(r'\d+', query_string)
         return str(is_minus(list(map(int, numlist))))
@@ -49,7 +52,10 @@ def process_query(query_string):
         for i in numlist:
             if (is_cube(int(i)) & is_square(int(i))):
                 cube_list.append(int(i))
-        return str(cube_list)
+        if len(cube_list) == 1:
+            return str(cube_list[0])
+        else:
+            return str(cube_list)
     else:
         return "Query not recognised"
 
