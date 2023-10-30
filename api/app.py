@@ -40,6 +40,9 @@ def process_query(query_string):
             if x == 1:
                 prime_list.append(i)
         return str(prime_list)
+    elif "minus" in query_string:
+        numlist = re.findall(r'\d+', query_string)
+        return str(is_minus(list(map(int, numlist))))
     else:
         return "Query not recognised"
 
@@ -57,6 +60,7 @@ def multiplyList(myList):
         result = result * x
     return result
 
+
 def is_prime(num):
     if num > 1:
         for i in range(2, num):
@@ -64,3 +68,6 @@ def is_prime(num):
                 return 0
         return 1
     return 0
+
+def is_minus(my_list):
+    return (my_list[0]-my_list[1])
