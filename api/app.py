@@ -32,6 +32,14 @@ def process_query(query_string):
     elif "multiplied" in query_string:
         numlist = re.findall(r'\d+', query_string)
         return str(multiplyList(list(map(int, numlist))))
+    elif "prime" in query_string:
+        prime_list = []
+        numlist = re.findall(r'\d+', query_string)
+        for i in numlist:
+            x = is_prime(int(i))
+            if x == 1:
+                prime_list.append(i)
+        return str(prime_list)
     else:
         return "Query not recognised"
 
@@ -48,3 +56,11 @@ def multiplyList(myList):
     for x in myList:
         result = result * x
     return result
+
+def is_prime(num):
+    if num > 1:
+        for i in range(2, num):
+            if (num % i) == 0:
+                return 0
+        return 1
+    return 0

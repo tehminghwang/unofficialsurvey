@@ -26,3 +26,7 @@ def test_does_not_know_sum():
 
 def test_does_not_know_multiply():
     assert process_query("What is 34 multiplied by 14?") == "476"
+
+
+def test_does_not_know_prime():
+    assert process_query("Which of the following numbers are primes: 30, 55, 70, 92, 7?") == "['7']"
