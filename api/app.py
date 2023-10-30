@@ -31,7 +31,7 @@ def process_query(query_string):
         return int(sum(list(map(int, numlist))))
     elif "multiplied" in query_string:
         numlist = re.findall(r'\d+', query_string)
-        return int(multiplyList(list(map(int, numlist))))
+        return str(multiplyList(list(map(int, numlist))))
     else:
         return "Query not recognised"
 
@@ -47,4 +47,4 @@ def multiplyList(myList):
     result = 1
     for x in myList:
         result = result * x
-        return result
+    return result
