@@ -25,12 +25,32 @@ def github():
 	input_user = request.form.get("user")
 	response = requests.get(f"https://api.github.com/users/{input_user}/repos")
 	if response.status_code == 200:
-		repos = response.json() # data returned is a list of ‘repository’ entities
-		#for repo in repos:
-		#	 return render_template("reply.html", user=repo[“full_name”])
-		return ', '.join([repo['full_name'] for repo in repos])
-			#return render_template(repo[“full_name”])
-	return 'No response'
+		repos = response.json()
+
+		# Create an HTML table to display the repository names
+		repo_table_html = "<table border='1'><tr><th>Repository Name</th></tr>"
+		for repo in repos:
+			repo_name = repo['full_name']
+			repo_table_html += f"<tr><td>{repo_name}</td></tr>"
+		repo_table_html += "</table>"
+
+		return repo_table_html
+	else:
+		return 'No response'
+
+	if __name__ == "__main__":
+		app.run(debug=True)
+
+	#if __name__ == "__main__":
+		#app.run(debug=True)
+
+	#if response.status_code == 200:
+	#	repos = response.json() # data returned is a list of ‘repository’ entities
+	#	#for repo in repos:
+	#	#	 return render_template("reply.html", user=repo[“full_name”])
+	#	return ', '.join([repo['full_name'] for repo in repos])
+	#		#return render_template(repo[“full_name”])
+	#return 'No response'
 
 
 def process_query(query_string):
