@@ -22,35 +22,72 @@ def submit():
 
 @app.route("/hello", methods=["POST"])
 def github():
-	input_user = request.form.get("user")
-	response = requests.get(f"https://api.github.com/users/{input_user}/repos")
-	if response.status_code == 200:
-		repos = response.json()
+    input_user = request.form.get("user")
+    response = requests.get(f"https://api.github.com/users/{input_user}/repos")
+    if response.status_code == 200:
+        repos = response.json()
 
-		# Create an HTML table to display the repository names
-		repo_table_html = "<table border='1'><tr><th>Repository Name</th></tr>"
-		for repo in repos:
-			repo_name = repo['full_name']
-			repo_table_html += f"<tr><td>{repo_name}</td></tr>"
-		repo_table_html += "</table>"
+        # Create an HTML table to display the repository information
+        repo_table_html = "<table border='1'><tr><th>Repository Name</th>"
+        repo_table_html += "<th>Last Commit Date</th>"
+        repo_table_html += "<th>Forks Count</th>"
+        repo_table_html += "<th>URL</th>"
+        repo_table_html += "<th>Size</th>"
+        repo_table_html += "</tr>"
 
-		return repo_table_html
-	else:
-		return 'No response'
+        for repo in repos:
+            repo_name = repo['full_name']
+            repo_last_commit = repo['pushed_at']
+            repo_forks_count = repo['forks_count']
+            repo_url = repo['html_url']
+            repo_size = repo['size']
 
-	if __name__ == "__main__":
-		app.run(debug=True)
+            repo_table_html += f"<tr><td>{repo_name}</td><td>{repo_last_commit}</td><td>{repo_forks_count}</td><td><a href='{repo_url}'>Link</a></td><td>{repo_size}</td></tr>"
 
-	#if __name__ == "__main__":
-		#app.run(debug=True)
+            # Fetch and display the commit history for each repository
+            commit_history = fetch_commit_history(repo_name)
+            commit_table_html = "<table border='1'><tr><th>Commit Message</th><th>Author</th><th>Timestamp</th><th>SHA</th></tr>"
+            for commit in commit_history:
+                commit_message = commit['commit']['message']
+                author_name = commit['commit']['author']['name']
+                commit_timestamp = commit['commit']['author']['date']
+                commit_sha = commit['sha']
+                commit_table_html += f"<tr><td>{commit_message}</td><td>{author_name}</td><td>{commit_timestamp}</td><td>{commit_sha}</td></tr>"
+            commit_table_html += "</table>"
 
-	#if response.status_code == 200:
-	#	repos = response.json() # data returned is a list of ‘repository’ entities
-	#	#for repo in repos:
-	#	#	 return render_template("reply.html", user=repo[“full_name”])
-	#	return ', '.join([repo['full_name'] for repo in repos])
-	#		#return render_template(repo[“full_name”])
-	#return 'No response'
+            # Fetch and display the list of files for the latest commit
+            latest_commit_files = fetch_latest_commit_files(repo_name)
+            file_list_html = "<ul>"
+            for file in latest_commit_files:
+                file_name = file['filename']
+                file_download_url = file['raw_url']
+                file_list_html += f"<li><a href='{file_download_url}'>{file_name}</a></li>"
+            file_list_html += "</ul>"
+
+            repo_table_html += f"<tr><td colspan='5'>{commit_table_html}<br>{file_list_html}</td></tr>"
+
+        repo_table_html += "</table>"
+
+        return repo_table_html
+    else:
+        return 'No response'
+
+def fetch_commit_history(repo_name):
+    response = requests.get(f"https://api.github.com/repos/{repo_name}/commits")
+    if response.status_code == 200:
+        return response.json()
+    return []
+
+def fetch_latest_commit_files(repo_name):
+    response = requests.get(f"https://api.github.com/repos/{repo_name}/commits/master/files")
+    if response.status_code == 200:
+        return response.json()
+    return []
+
+if __name__ == "__main__":
+    app.run(debug=True)
+
+
 
 
 def process_query(query_string):
