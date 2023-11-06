@@ -10,7 +10,7 @@ def hello_world():
 
 
 @app.route("/form")
-def hello_world():
+def hello_form():
     return render_template("form.html")
 
 @app.route("/submit", methods=["POST"])
