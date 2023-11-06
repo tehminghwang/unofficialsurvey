@@ -60,13 +60,14 @@ def github():
 		repo_table_html += "<th>Size</th>"
 		repo_table_html += "</tr>"
 
+<<<<<<< HEAD
 		for repo in repos:
 			repo_name = repo['full_name']
 			repo_last_commit = repo['pushed_at']
 			repo_forks_count = repo['forks_count']
 			repo_url = repo['html_url']
 			repo_size = repo['size']
-
+=======
         author_tables = []  # List to store author tables
         commit_comment_tables = []  # List to store commit comment tables
 
@@ -79,9 +80,11 @@ def github():
             repo_forks_count = repo['forks_count']
             repo_url = repo['html_url']
             repo_size = repo['size']
+>>>>>>> refs/remotes/origin/new_branch
 
 			repo_table_html += f"<tr><td>{repo_name}</td><td>{repo_last_commit}</td><td>{repo_forks_count}</td><td><a href='{repo_url}'>Link</a></td><td>{repo_size}</td></tr>"
 
+<<<<<<< HEAD
 			# Fetch and display the commit history for each repository
 			commit_history = fetch_commit_history(repo_name)
 			commit_table_html = "<table border='1'><tr><th>Commit Message</th><th>Author</th><th>Timestamp</th><th>SHA</th></tr>"
@@ -103,7 +106,7 @@ def github():
 			file_list_html += "</ul>"
 
 			repo_table_html += f"<tr><td colspan='5'>{commit_table_html}<br>{file_list_html}</td></tr>"
-
+=======
             # Fetch and display the commit history for each repository
             commit_history = fetch_commit_history(repo_name)
             commit_table_html = "<table border='1'><tr><th>Commit Message</th><th>Author</th><th>Timestamp</th><th>SHA</th></tr>"
@@ -139,13 +142,15 @@ def github():
                 commit_comment_table_html += f"<tr><td>{comment}</td><td>{count}</td></tr>"
             commit_comment_table_html += "</table>"
             commit_comment_tables.append(commit_comment_table_html)
+>>>>>>> refs/remotes/origin/new_branch
 
 		repo_table_html += "</table>"
 
+<<<<<<< HEAD
 		return repo_table_html
 	else:
 		return 'No response'
-
+=======
         # Append the author tables and commit comment tables to the repository table
         for author_table, commit_comment_table in zip(author_tables, commit_comment_tables):
             repo_table_html += f"{author_table}{commit_comment_table}"
@@ -160,6 +165,7 @@ def github():
         return repo_table_html + commit_count_table_html
     else:
         return 'No response'
+>>>>>>> refs/remotes/origin/new_branch
 
 def fetch_commit_history(repo_name):
 	response = requests.get(f"https://api.github.com/repos/{repo_name}/commits")
