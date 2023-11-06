@@ -25,13 +25,13 @@ def hello_code():
 	return render_template('code.html')
 
 def execute_python_code(code):
-    try:
-        # Use 'exec' to execute the Python code
-        exec(code)
-        result = "Code executed successfully."
-    except Exception as e:
-        result = f"Error: {str(e)}"
-    return result
+	try:
+		# Use 'exec' to execute the Python code
+		exec(code)
+		result = "Code executed successfully."
+	except Exception as e:
+		result = f"Error: {str(e)}"
+	return result
 
 @app.route("/form")
 def hello_form():
@@ -67,18 +67,17 @@ def github():
 			repo_url = repo['html_url']
 			repo_size = repo['size']
 
-        author_tables = []  # List to store author tables
-        commit_comment_tables = []  # List to store commit comment tables
+		author_tables = []  # List to store author tables
+		commit_comment_tables = []  # List to store commit comment tables
+		commit_counts = {}  # Dictionary to store commit counts per week
+		commit_count_table_html = "<table border='1'><tr><th>Week</th><th>Commit Count</th></tr>"
 
-        commit_counts = {}  # Dictionary to store commit counts per week
-        commit_count_table_html = "<table border='1'><tr><th>Week</th><th>Commit Count</th></tr>"
-
-        for repo in repos:
-            repo_name = repo['full_name']
-            repo_last_commit = repo['pushed_at']
-            repo_forks_count = repo['forks_count']
-            repo_url = repo['html_url']
-            repo_size = repo['size']
+		for repo in repos:
+			repo_name = repo['full_name']
+			repo_last_commit = repo['pushed_at']
+			repo_forks_count = repo['forks_count']
+			repo_url = repo['html_url']
+			repo_size = repo['size']
 
 			repo_table_html += f"<tr><td>{repo_name}</td><td>{repo_last_commit}</td><td>{repo_forks_count}</td><td><a href='{repo_url}'>Link</a></td><td>{repo_size}</td></tr>"
 
@@ -104,41 +103,41 @@ def github():
 
 			repo_table_html += f"<tr><td colspan='5'>{commit_table_html}<br>{file_list_html}</td></tr>"
 
-            # Fetch and display the commit history for each repository
-            commit_history = fetch_commit_history(repo_name)
-            commit_table_html = "<table border='1'><tr><th>Commit Message</th><th>Author</th><th>Timestamp</th><th>SHA</th></tr>"
-            commit_comments = set()
-            authors = set()
-            for commit in commit_history:
-                commit_message = commit['commit']['message']
-                author_name = commit['commit']['author']['name']
-                commit_timestamp = commit['commit']['author']['date']
-                commit_sha = commit['sha']
-                commit_table_html += f"<tr><td>{commit_message}</td><td>{author_name}</td><td>{commit_timestamp}</td><td>{commit_sha}</td></tr>"
-                commit_comments.add(commit_message)
-                authors.add(author_name)
-                commit_date = commit_timestamp.split('T')[0]
-                commit_week = f"Week {datetime.strptime(commit_date, '%Y-%m-%d').strftime('%U, %Y')}"
-                commit_counts[commit_week] = commit_counts.get(commit_week, 0) + 1
-            commit_table_html += "</table>"
+			# Fetch and display the commit history for each repository
+			commit_history = fetch_commit_history(repo_name)
+			commit_table_html = "<table border='1'><tr><th>Commit Message</th><th>Author</th><th>Timestamp</th><th>SHA</th></tr>"
+			commit_comments = set()
+			authors = set()
+			for commit in commit_history:
+				commit_message = commit['commit']['message']
+				author_name = commit['commit']['author']['name']
+				commit_timestamp = commit['commit']['author']['date']
+				commit_sha = commit['sha']
+				commit_table_html += f"<tr><td>{commit_message}</td><td>{author_name}</td><td>{commit_timestamp}</td><td>{commit_sha}</td></tr>"
+				commit_comments.add(commit_message)
+				authors.add(author_name)
+				commit_date = commit_timestamp.split('T')[0]
+				commit_week = f"Week {datetime.strptime(commit_date, '%Y-%m-%d').strftime('%U, %Y')}"
+				commit_counts[commit_week] = commit_counts.get(commit_week, 0) + 1
+			commit_table_html += "</table>"
 
-            # Append the commit table to the repository table
-            repo_table_html += f"<tr><td colspan='5'>{commit_table_html}</td></tr>"
+			# Append the commit table to the repository table
+			repo_table_html += f"<tr><td colspan='5'>{commit_table_html}</td></tr>"
 
-            # Create an author table
-            author_table_html = "<table border='1'><tr><th>Unique Authors</th></tr>"
-            for author in authors:
-                author_table_html += f"<tr><td>{author}</td></tr>"
-            author_table_html += "</table>"
-            author_tables.append(author_table_html)
+			# Create an author table
+			author_table_html = "<table border='1'><tr><th>Unique Authors</th></tr>"
+			for author in authors:
+				author_table_html += f"<tr><td>{author}</td></tr>"
+			author_table_html += "</table>"
+			author_tables.append(author_table_html)
 
-            # Create a commit comment table
-            commit_comment_table_html = "<table border='1'><tr><th>Unique Commit Comments</th><th>Count</th></tr>"
-            for comment in commit_comments:
-                count = sum(1 for commit in commit_history if commit['commit']['message'] == comment)
-                commit_comment_table_html += f"<tr><td>{comment}</td><td>{count}</td></tr>"
-            commit_comment_table_html += "</table>"
-            commit_comment_tables.append(commit_comment_table_html)
+			# Create a commit comment table
+			commit_comment_table_html = "<table border='1'><tr><th>Unique Commit Comments</th><th>Count</th></tr>"
+			for comment in commit_comments:
+				count = sum(1 for commit in commit_history if commit['commit']['message'] == comment)
+				commit_comment_table_html += f"<tr><td>{comment}</td><td>{count}</td></tr>"
+			commit_comment_table_html += "</table>"
+			commit_comment_tables.append(commit_comment_table_html)
 
 		repo_table_html += "</table>"
 
@@ -146,20 +145,20 @@ def github():
 	else:
 		return 'No response'
 
-        # Append the author tables and commit comment tables to the repository table
-        for author_table, commit_comment_table in zip(author_tables, commit_comment_tables):
-            repo_table_html += f"{author_table}{commit_comment_table}"
+		# Append the author tables and commit comment tables to the repository table
+		for author_table, commit_comment_table in zip(author_tables, commit_comment_tables):
+			repo_table_html += f"{author_table}{commit_comment_table}"
 
-        # Filter and combine commit count per week table
-        commit_count_table_html += "<table border='1'>"
-        for week, count in commit_counts.items():
-            if 'Week 40' <= week <= 'Week 45':
-                commit_count_table_html += f"<tr><td>{week}</td><td>{count}</td></tr>"
-        commit_count_table_html += "</table>"
+		# Filter and combine commit count per week table
+		commit_count_table_html += "<table border='1'>"
+		for week, count in commit_counts.items():
+			if 'Week 40' <= week <= 'Week 45':
+				commit_count_table_html += f"<tr><td>{week}</td><td>{count}</td></tr>"
+				commit_count_table_html += "</table>"
 
-        return repo_table_html + commit_count_table_html
-    else:
-        return 'No response'
+				return repo_table_html + commit_count_table_html
+			else:
+				return 'No response'
 
 def fetch_commit_history(repo_name):
 	response = requests.get(f"https://api.github.com/repos/{repo_name}/commits")
@@ -175,11 +174,6 @@ def fetch_latest_commit_files(repo_name):
 
 if __name__ == "__main__":
 	app.run(debug=True)
-
-
-
-
-
 
 
 def process_query(query_string):
