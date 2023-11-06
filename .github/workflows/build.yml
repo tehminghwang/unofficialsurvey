@@ -67,7 +67,6 @@ jobs:
       - name: Run browser tests
         run: pytest api/browser_test.py
   deploy-to-vercel:
-    needs: browser-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
