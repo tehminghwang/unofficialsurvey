@@ -27,7 +27,7 @@ def github():
 	if response.status_code == 200:
 		repos = response.json() # data returned is a list of ‘repository’ entities
 		for repo in repos:
-			return (repo[“full_name”])
+			return render_template(repo[“full_name”])
     #return render_template("reply.html", user=input_user)
 
 
