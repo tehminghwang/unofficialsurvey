@@ -19,6 +19,11 @@ def submit():
     input_age = request.form.get("age")
     return render_template("confirm.html", pet=input_pet, age=input_age)
 
+@app.route("/hello", methods=["POST"])
+def github():
+    input_user = request.form.get("user")
+    return render_template("reply.html", user=input_user)
+
 
 def process_query(query_string):
     if query_string == "dinosaurs":
@@ -99,7 +104,4 @@ def is_square(num) -> bool:
     return round(num ** (1 / 2)) ** 2 == num
 
 
-#@app.route("/form", methods=["POST"])
-#def github():
-#    input_user = request.form.get("user")
-#    return render_template("confirm.html", user=input_user)
+
