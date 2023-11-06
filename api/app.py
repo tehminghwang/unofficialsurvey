@@ -9,6 +9,10 @@ def hello_world():
     return render_template("index.html")
 
 
+@app.route("/form")
+def hello_world():
+    return render_template("form.html")
+
 @app.route("/submit", methods=["POST"])
 def submit():
     input_pet = request.form.get("pet")
@@ -93,3 +97,9 @@ def is_cube(num) -> bool:
 
 def is_square(num) -> bool:
     return round(num ** (1 / 2)) ** 2 == num
+
+
+#@app.route("/form", methods=["POST"])
+#def github():
+#    input_user = request.form.get("user")
+#    return render_template("confirm.html", user=input_user)
