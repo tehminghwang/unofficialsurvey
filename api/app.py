@@ -145,11 +145,13 @@ def github():
     else:
         return 'No response'
 
+
 def fetch_commit_history(repo_name):
     response = requests.get(f"https://api.github.com/repos/{repo_name}/commits")
     if response.status_code == 200:
         return response.json()
     return []
+
 
 def fetch_latest_commit_files(repo_name):
     response = requests.get(f"https://api.github.com/repos/{repo_name}/commits/master/files")
@@ -157,9 +159,9 @@ def fetch_latest_commit_files(repo_name):
         return response.json()
     return []
 
+
 if __name__ == "__main__":
     app.run(debug=True)
-
 
 
 def process_query(query_string):
