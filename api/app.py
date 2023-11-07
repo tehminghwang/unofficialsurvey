@@ -2,7 +2,8 @@ from flask import Flask, render_template, request
 import re
 import requests
 from datetime import datetime
-
+import sys
+from io import StringIO
 
 app = Flask(__name__)
 
@@ -24,14 +25,28 @@ def hello_code():
 		return render_template('code.html', code=code, result=result)
 	return render_template('code.html')
 
+
 def execute_python_code(code):
-	try:
-		# Use 'exec' to execute the Python code
-		exec(code)
-		result = "Code executed successfully."
-	except Exception as e:
-		result = f"Error: {str(e)}"
-	return result
+    try:
+        # Create a StringIO object to capture the output
+        output_buffer = StringIO()
+        sys.stdout = output_buffer
+
+        # Execute the Python code
+        exec(code)
+
+        # Get the captured output as a string
+        captured_output = output_buffer.getvalue()
+
+        result = captured_output
+
+    except Exception as e:
+        result = f"Error: {str(e)}"
+    finally:
+        # Restore the original sys.stdout
+        sys.stdout = sys.__stdout__
+
+    return result
 
 @app.route("/form")
 def hello_form():

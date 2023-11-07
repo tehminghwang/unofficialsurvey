@@ -5,10 +5,48 @@
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.62.0/lib/codemirror.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/codemirror@5.62.0/mode/python/python.js"></script>
 </head>
+
 <body>
-    <textarea id="code"></textarea>
+    <h4>Here is a nested API using a Python API to access the Github API!! How cool is that!</h4>
+    <form method="POST">
+        <textarea id="code" name="code">{{ code }}</textarea>
+        <input type="submit" value="Run Code">
+    </form>
+
     <h2>Result:</h2>
     <pre>{{ result }}</pre>
+
+    <h4>Just copy and paste into the text box above, and click on run code!</h4>
+    <pre>
+    <code>
+response = requests.get(f"https://api.github.com/users/tehminghwang/repos")
+
+if response.status_code == 200:
+    repos = response.json()  # Data returned is a list of 'repository' entities
+
+    for repo in repos:
+        print("Repository Name: ", repo['name'])
+        print("Full Name: ", repo['full_name'])
+        print("HTML URL: ", repo['html_url'])
+
+        # You can make another request to get commit information if needed
+        commits_url = repo['commits_url'].replace("{/sha}", "")
+        commits_response = requests.get(commits_url)
+        if commits_response.status_code == 200:
+            commits = commits_response.json()
+            if len(commits) > 0:
+                print("Last Commit:")
+                print("  Author: ", commits[0]['commit']['author']['name'])
+                print("  Message: ", commits[0]['commit']['message'])
+                print("  Date: ", commits[0]['commit']['author']['date'])
+            else:
+                print("No commits found for this repository.")
+
+        print("\n")
+else:
+    print("Failed to fetch user repositories.")
+    </code>
+    </pre>
     <script>
         var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
             lineNumbers: true,
@@ -16,9 +54,6 @@
             theme: "default"
         });
     </script>
-	<form method="POST">
-    <textarea id="code" name="code">{{ code }}</textarea>
-    <input type="submit" value="Run Code">
-</form>
 </body>
 </html>
+
