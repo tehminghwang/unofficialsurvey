@@ -13,7 +13,7 @@ jobs:
       - name: Install black
         run: pip install black
       - name: Run black
-        run: black api/*.py
+        run: black app.py
   python-formatting-check:
     needs: auto-formatting
     runs-on: ubuntu-latest
@@ -27,7 +27,7 @@ jobs:
     - name: Install flake8
       run: pip install flake8
     - name: Run flake8
-      run: flake8 api/
+      run: flake8 app.py
   build-step:
     needs: python-formatting-check
     runs-on: ubuntu-latest
@@ -67,6 +67,7 @@ jobs:
       - name: Run browser tests
         run: pytest api/browser_test.py
   deploy-to-vercel:
+    needs: browser-tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
