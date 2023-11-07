@@ -69,24 +69,19 @@ def github():
         repos = response.json()
 
         # Create an HTML table to display the repository information
-        repo_table_html = "<table border='1'><tr><th>Repository Name</th>"
+        repo_table_html = "<h1><a href='https://unofficialsurvey-nine.vercel.app/code'>Click here to play with your Python code to query Github</a></h1>"
+        repo_table_html += "<table border='1'><tr><th>Repository Name</th>"
         repo_table_html += "<th>Last Commit Date</th>"
         repo_table_html += "<th>Forks Count</th>"
         repo_table_html += "<th>URL</th>"
         repo_table_html += "<th>Size</th>"
         repo_table_html += "</tr>"
 
-        for repo in repos:
-            repo_name = repo['full_name']
-            repo_last_commit = repo['pushed_at']
-            repo_forks_count = repo['forks_count']
-            repo_url = repo['html_url']
-            repo_size = repo['size']
-
         author_tables = []  # List to store author tables
         commit_comment_tables = []  # List to store commit comment tables
+
         commit_counts = {}  # Dictionary to store commit counts per week
-        commit_count_table_html = ("<table border='1'><tr><th>Week</th><th>Commit Count</th></tr>")
+        commit_count_table_html = "<table border='1'><tr><th>Week</th><th>Commit Count</th></tr>"
 
         for repo in repos:
             repo_name = repo['full_name']
@@ -95,29 +90,7 @@ def github():
             repo_url = repo['html_url']
             repo_size = repo['size']
 
-            repo_table_html += (f"<tr><td>{repo_name}</td><td>{repo_last_commit}</td><td>{repo_forks_count}</td><td><a href='{repo_url}'>Link</a></td><td>{repo_size}</td></tr>")
-
-            # Fetch and display the commit history for each repository
-            commit_history = fetch_commit_history(repo_name)
-            commit_table_html = "<table border='1'><tr><th>Commit Message</th><th>Author</th><th>Timestamp</th><th>SHA</th></tr>"
-            for commit in commit_history:
-                commit_message = commit['commit']['message']
-                author_name = commit['commit']['author']['name']
-                commit_timestamp = commit['commit']['author']['date']
-                commit_sha = commit['sha']
-                commit_table_html += f"<tr><td>{commit_message}</td><td>{author_name}</td><td>{commit_timestamp}</td><td>{commit_sha}</td></tr>"
-            commit_table_html += "</table>"
-
-            # Fetch and display the list of files for the latest commit
-            latest_commit_files = fetch_latest_commit_files(repo_name)
-            file_list_html = "<ul>"
-            for file in latest_commit_files:
-                file_name = file['filename']
-                file_download_url = file['raw_url']
-                file_list_html += f"<li><a href='{file_download_url}'>{file_name}</a></li>"
-            file_list_html += "</ul>"
-
-            repo_table_html += f"<tr><td colspan='5'>{commit_table_html}<br>{file_list_html}</td></tr>"
+            repo_table_html += f"<tr><td>{repo_name}</td><td>{repo_last_commit}</td><td>{repo_forks_count}</td><td><a href='{repo_url}'>Link</a></td><td>{repo_size}</td></tr>"
 
             # Fetch and display the commit history for each repository
             commit_history = fetch_commit_history(repo_name)
@@ -157,10 +130,6 @@ def github():
 
         repo_table_html += "</table>"
 
-        return repo_table_html
-    else:
-        return 'No response'
-
         # Append the author tables and commit comment tables to the repository table
         for author_table, commit_comment_table in zip(author_tables, commit_comment_tables):
             repo_table_html += f"{author_table}{commit_comment_table}"
@@ -170,12 +139,11 @@ def github():
         for week, count in commit_counts.items():
             if 'Week 40' <= week <= 'Week 45':
                 commit_count_table_html += f"<tr><td>{week}</td><td>{count}</td></tr>"
-                commit_count_table_html += "</table>"
+        commit_count_table_html += "</table>"
 
-                return repo_table_html + commit_count_table_html
-            else:
-                return 'No response'
-
+        return repo_table_html + commit_count_table_html
+    else:
+        return 'No response'
 
 def fetch_commit_history(repo_name):
     response = requests.get(f"https://api.github.com/repos/{repo_name}/commits")
@@ -183,16 +151,15 @@ def fetch_commit_history(repo_name):
         return response.json()
     return []
 
-
 def fetch_latest_commit_files(repo_name):
     response = requests.get(f"https://api.github.com/repos/{repo_name}/commits/master/files")
     if response.status_code == 200:
         return response.json()
     return []
 
-
 if __name__ == "__main__":
     app.run(debug=True)
+
 
 
 def process_query(query_string):
