@@ -86,7 +86,8 @@ def github():
         author_tables = []  # List to store author tables
         commit_comment_tables = []  # List to store commit comment tables
         commit_counts = {}  # Dictionary to store commit counts per week
-        commit_count_table_html = "<table border='1'><tr><th>Week</th><th>Commit Count</th></tr>"
+        commit_count_table_html = ("<table border='1'>"
+								   "<tr><th>Week</th><th>Commit Count</th></tr>")
 
         for repo in repos:
             repo_name = repo['full_name']
@@ -95,7 +96,8 @@ def github():
             repo_url = repo['html_url']
             repo_size = repo['size']
 
-            repo_table_html += f"<tr><td>{repo_name}</td><td>{repo_last_commit}</td><td>{repo_forks_count}</td><td><a href='{repo_url}'>Link</a></td><td>{repo_size}</td></tr>"
+            repo_table_html += (f"<tr><td>{repo_name}</td>"
+								f"<td>{repo_last_commit}</td><td>{repo_forks_count}</td><td><a href='{repo_url}'>Link</a></td><td>{repo_size}</td></tr>")
 
             # Fetch and display the commit history for each repository
             commit_history = fetch_commit_history(repo_name)
